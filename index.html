@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comprehensive Allegations Map of Sean Combs</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        /* Remove unnecessary padding/margins */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        /* Ensure the map takes up full space */
+        #map {
+            height: 100vh; /* Full viewport height */
+            width: 100vw;  /* Full viewport width */
+        }
+
+        .disclaimer {
+            font-size: 14px;
+            color: #555;
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h3 style="text-align: center;">Comprehensive Allegations Map of Sean Combs</h3>
+
+    <!-- Disclaimer for Educational Purposes -->
+    <div class="disclaimer">
+        <p><strong>Disclaimer:</strong> This map is for educational purposes only. It compiles allegations and ongoing legal proceedings involving Sean Combs, based on publicly available legal documents.</p>
+    </div>
+
+    <div id="map"></div>
+
+    <script>
+        // Create the map centered on the USA
+        var map = L.map('map').setView([37.0902, -95.7129], 4);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+        }).addTo(map);
+
+        // Array of locations with allegations, quotes, years, and case details
+        var locations = [
+            {
+                name: "Cipriani Downtown, New York, NY",
+                coords: [40.7230, -74.0007],
+                description: `
+                    <b>Year</b>: 2003<br>
+                    <b>Event</b>: Crystal McKinney was introduced to Sean Combs at a Men’s Fashion Week event.<br>
+                    <b>Allegation</b>: Combs drugged and sexually assaulted McKinney at his recording studio.<br>
+                    <b>Legal Claim</b>: Sexual Assault under New York's Gender Motivated Violence Protection Act.<br>
+                    <b>Testimony</b>: "Combs drugged and assaulted Plaintiff at his recording studio following the event"【Page 14 of McKinney Complaint】.<br>
+                    <b>Case Status</b>: Pending litigation.<br>
+                `
+            },
+            {
+                name: "Wells Restaurant, Harlem, NY",
+                coords: [40.8184, -73.9435],
+                description: `
+                    <b>Year</b>: 1991<br>
+                    <b>Event</b>: Joi Dickerson was drugged and later assaulted by Sean Combs.<br>
+                    <b>Allegation</b>: Sexual assault and creation of revenge porn.<br>
+                    <b>Legal Claim</b>: Sexual Assault under New York's Adult Survivors Act (ASA) and Revenge Porn Law.<br>
+                    <b>Testimony</b>: "My friend told me that my assault had been videotaped and shared without my consent"【Page 6 of Dickerson Complaint】.<br>
+                    <b>Case Status</b>: Pending litigation.<br>
+                `
+            },
+            {
+                name: "Combs' Estate, Hamptons, NY",
+                coords: [40.9634, -72.1848],
+                description: `
+                    <b>Year</b>: 2004-2009<br>
+                    <b>Event</b>: Trafficking and exploitation at Combs' “White Parties.”<br>
+                    <b>Allegation</b>: Racketeering and sex trafficking under federal law.<br>
+                    <b>Testimony</b>: "Combs arranged for women to be flown to his estate, where they were coerced into sexual acts"【Page 18 of Adria English Complaint】.<br>
+                    <b>Case Status</b>: Under investigation.<br>
+                `
+            },
+            {
+                name: "Star Island, Miami, FL",
+                coords: [25.7649, -80.1580],
+                description: `
+                    <b>Year</b>: 2004-2009<br>
+                    <b>Event</b>: Sex trafficking and drug distribution at parties hosted by Combs.<br>
+                    <b>Allegation</b>: Racketeering, sex trafficking, and drug distribution.<br>
+                    <b>Testimony</b>: "Adria English testified that sex workers were flown to Star Island to engage in non-consensual acts"【Page 23 of Adria English Complaint】.<br>
+                    <b>Case Status</b>: Pending under RICO violations.<br>
+                `
+            },
+            {
+                name: "Chalice Recording Studios, Los Angeles, CA",
+                coords: [34.0522, -118.2437],
+                description: `
+                    <b>Year</b>: 2022<br>
+                    <b>Event</b>: Shooting incident involving Rodney Jones and Sean Combs.<br>
+                    <b>Allegation</b>: Obstruction of justice and negligent infliction of emotional distress.<br>
+                    <b>Testimony</b>: "Combs forced witnesses to lie to the police after the shooting"【Page 5 of Jones Complaint】.<br>
+                    <b>Case Status</b>: Pending criminal investigation.<br>
+                `
+            },
+            {
+                name: "InterContinental Hotel, Los Angeles, CA",
+                coords: [34.0522, -118.2437],
+                description: `
+                    <b>Year</b>: 2016<br>
+                    <b>Event</b>: Assault on Cassie Ventura.<br>
+                    <b>Allegation</b>: Physical assault and battery.<br>
+                    <b>Testimony</b>: "Hotel security footage shows Combs striking Ventura multiple times"【Page 9 of Cassie Ventura Complaint】.<br>
+                    <b>Case Status</b>: Settled in November 2023.<br>
+                `
+            },
+            {
+                name: "1999 Nightclub, New York, NY",
+                coords: [40.7644, -73.9776],
+                description: `
+                    <b>Year</b>: 1999<br>
+                    <b>Event</b>: Nightclub shooting involving Sean Combs, Jennifer Lopez, and Shyne.<br>
+                    <b>Allegation</b>: Illegal firearm possession and obstruction of justice.<br>
+                    <b>Testimony</b>: "Witnesses reported seeing Combs hand off the gun to his bodyguard after the incident"【Page 11 of Nightclub Shooting Case】.<br>
+                    <b>Case Status</b>: Combs was acquitted in 2001.<br>
+                `
+            },
+            {
+                name: "Yacht in US Virgin Islands",
+                coords: [18.3358, -64.8963],
+                description: `
+                    <b>Year</b>: 2022<br>
+                    <b>Event</b>: Drug-fueled parties involving sex trafficking and exploitation.<br>
+                    <b>Allegation</b>: Trafficking and distribution of drugs on a rented yacht.<br>
+                    <b>Testimony</b>: "Rodney Jones provided video footage of illegal drug use and exploitation during yacht parties"【Page 12 of Jones Testimony】.<br>
+                    <b>Case Status</b>: Active investigation.<br>
+                `
+            },
+            {
+                name: "Sean Combs' Residence, Beverly Hills, CA",
+                coords: [34.0736, -118.4004],
+                description: `
+                    <b>Year</b>: 2010-2022<br>
+                    <b>Event</b>: "Freak Off" parties involving drugs and sex workers.<br>
+                    <b>Allegation</b>: Drug distribution and forced labor.<br>
+                    <b>Testimony</b>: "Guests provided video evidence of drug use and illegal activities during parties at Combs' residence"【Page 22 of Legal Document】.<br>
+                    <b>Case Status</b>: Under investigation for RICO violations.<br>
+                `
+            }
+        ];
+
+        // Add markers to the map
+        locations.forEach(function(location) {
+            L.marker(location.coords).addTo(map).bindPopup(location.description);
+        });
+    </script>
+</body>
+</html>
